@@ -1,10 +1,14 @@
 "use client";
 
-import MarketingPage from "./(marketing)/page";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-
-  return (
-    <MarketingPage />
-  );
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/home");
+  }, [router]);
+  return <main className=""></main>;
 }
+
