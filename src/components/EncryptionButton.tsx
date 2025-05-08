@@ -1,18 +1,18 @@
+import { FaArrowRight } from "react-icons/fa";
 interface EncryptionButtonProps {
     onEncrypt: () => void;
     disabled: boolean;
+    className: string;
   }
   
-  export function EncryptionButton({ onEncrypt, disabled }: EncryptionButtonProps) {
+  export function EncryptionButton({ onEncrypt, disabled, className }: EncryptionButtonProps) {
     return (
       <button
         onClick={onEncrypt}
         disabled={disabled}
-        className={`w-full py-3 rounded-md text-white font-semibold
-          ${disabled ? 'bg-neutral-600 cursor-not-allowed' : 'bg-neutral-500 hover:bg-accent-600'}
-          transition-colors duration-200`}
+        className={` ${className} `}
       >
-        Encrypt Data
+        <FaArrowRight />
       </button>
     );
   }

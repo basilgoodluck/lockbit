@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
     if (!password) {
       return NextResponse.json(
-        { error: "Password is required" },
+        { error: "Password is required to lock files" },
         { status: 400 }
       );
     }

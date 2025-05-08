@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { encryptData, EncryptionResult, DecryptionResult, decryptData } from "@/lib/services/encryption";
+import { encryptData, EncryptionResult, DecryptionResult, decryptData } from "@/services/encryption";
 
 export function useEncryption() {
   const [files, setFiles] = useState<File[]>([]);

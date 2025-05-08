@@ -1,25 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -28,10 +9,10 @@ body {
 
 .crazy-3d-title {
   text-shadow:
-    2px 2px 0 #be185d, 
+    2px 2px 0 #787476, 
     4px 4px 0 #2c2c2c,   
-    6px 6px 8px #db2777, 
-    0 0 40px #ec4899;    
+    6px 6px 8px #313030, 
+    0 0 40px #c3c1c2;    
   transform: perspective(400px) rotateX(8deg) rotateY(-12deg);
   animation: crazy-wobble 2s infinite alternate cubic-bezier(.68,-0.55,.27,1.55);
 }
@@ -40,5 +21,23 @@ body {
   0%   { transform: perspective(400px) rotateX(8deg) rotateY(-12deg) scale(1);}
   50%  { transform: perspective(400px) rotateX(-6deg) rotateY(10deg) scale(1.07);}
   100% { transform: perspective(400px) rotateX(8deg) rotateY(-12deg) scale(1);}
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+  background-color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+  border-color: inherit !important;
 }
 
