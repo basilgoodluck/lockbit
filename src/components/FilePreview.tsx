@@ -67,7 +67,7 @@ export function FilePreview({ file }: FilePreviewProps) {
         <video
           src={previewUrl}
           controls
-          className="mt-2 max-h-32 w-full rounded-md"
+          className="mt-2 max-h-84 w-full rounded-md"
         />
       );
     } else if (file.type.startsWith("audio/") && previewUrl) {

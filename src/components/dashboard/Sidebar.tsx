@@ -15,15 +15,17 @@ export function Sidebar() {
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
-    { name: "Encryption", href: "/dashboard/encryption", icon: Lock },
-    { name: "Files", href: "/dashboard/files", icon: Folder, isDropdown: true },
-    { name: "Settings", href: "/dashboard/settings", icon: Settings },
+    { name: "Encryption", href: "/encryption", icon: Lock },
+    { name: "Files", icon: Folder, isDropdown: true },
+    { name: "Settings", href: "/settings", icon: Settings },
   ];
 
   const resourceTypes = [
-    { name: "Videos", href: "/dashboard/files/videos" },
-    { name: "Images", href: "/dashboard/files/images" },
-    { name: "Documents", href: "/dashboard/files/documents" },
+    { name: "Videos", href: "/files/videos" },
+    { name: "Images", href: "/files/images" },
+    { name: "Documents", href: "/files/documents" },
+    { name: "Audios", href: "/files/audios" },
+    { name: "Others", href: "/files/others" },
   ];
 
   return (
@@ -46,33 +48,39 @@ export function Sidebar() {
           {navItems.map((item) => (
             <div key={item.name}>
               <div className="flex items-center">
-                <Link
-                  href={item.href}
-                  className={`
-                    flex items-center gap-3 p-2 rounded-lg flex-1
-                    text-neutral-600 dark:text-neutral-300
-                    hover:bg-accent-500 hover:text-white
-                    transition-colors
-                    ${pathname === item.href ? "bg-neutral-700 text-white" : ""}
-                  `}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <item.icon size={20} />
-                  <span>{item.name}</span>
-                </Link>
-                {item.isDropdown && (
+                {item.isDropdown ? (
                   <button
                     onClick={toggleFilesDropdown}
-                    className="
-                      p-2 text-neutral-600 dark:text-neutral-300
-                      hover:text-accent-500 transition-colors
-                    "
+                    className={`
+                      flex items-center gap-3 p-2 rounded-lg flex-1
+                      text-neutral-600 dark:text-neutral-300
+                      hover:bg-accent-500 hover:text-white
+                      transition-colors
+                      ${isFilesOpen ? "bg-neutral-700 text-white" : ""}
+                    `}
                   >
+                    <item.icon size={20} />
+                    <span>{item.name}</span>
                     <ChevronDown
                       size={20}
-                      className={`transition-transform ${isFilesOpen ? "rotate-180" : ""}`}
+                      className={`ml-auto transition-transform ${isFilesOpen ? "rotate-180" : ""}`}
                     />
                   </button>
+                ) : (
+                  <Link
+                    href={item.href!}
+                    className={`
+                      flex items-center gap-3 p-2 rounded-lg flex-1
+                      text-neutral-600 dark:text-neutral-300
+                      hover:bg-accent-500 hover:text-white
+                      transition-colors
+                      ${pathname === item.href ? "bg-neutral-700 text-white" : ""}
+                    `}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <item.icon size={20} />
+                    <span>{item.name}</span>
+                  </Link>
                 )}
               </div>
               {item.isDropdown && isFilesOpen && (
@@ -105,15 +113,17 @@ export function Sidebar() {
             </div>
             <div>
               <p className="text-neutral-900 dark:text-black font-semibold">User Name</p>
-              <button
+              <Link
+                href="/settings"
                 className="
                   flex items-center gap-2 text-sm text-neutral-600 dark:text-black
                   hover:text-accent-500 transition-colors
                 "
+                onClick={() => setIsOpen(false)}
               >
                 <Settings size={16} />
                 Settings
-              </button>
+              </Link>
             </div>
           </div>
         </div>
