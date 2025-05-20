@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { FilePreview } from "@/components/FilePreview";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import toast, { Toaster } from "react-hot-toast";
 import { FaTimesCircle } from "react-icons/fa";
@@ -43,6 +42,16 @@ export default function ImagesPage() {
     toast.success(`Downloading ${file.name}`);
   };
 
+  // Custom skeleton component for better dark mode support
+  const ImageSkeleton = () => (
+    <div className="flex flex-col rounded-lg overflow-hidden">
+      <div className="bg-neutral-200 dark:bg-neutral-700 h-40 w-full animate-pulse"></div>
+      <div className="p-3 space-y-2 bg-neutral-100 dark:bg-neutral-800">
+        <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-3/4 animate-pulse"></div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 py-6 px-6">
       <div className="max-w-7xl mx-auto">
@@ -53,15 +62,7 @@ export default function ImagesPage() {
         {isLoading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {[...Array(8)].map((_, i) => (
-              <Skeleton
-                key={i}
-                height={200}
-                borderRadius={8}
-                baseColor="dark:!bg-neutral-700 "
-                highlightColor="dark:!bg-neutral-600"
-                className="dark:!bg-neutral-700 "
-                enableAnimation
-              />
+              <ImageSkeleton key={i} />
             ))}
           </div>
         ) : files.length === 0 ? (
