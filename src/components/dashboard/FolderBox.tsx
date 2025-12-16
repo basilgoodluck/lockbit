@@ -1,5 +1,4 @@
 "use client";
-
 import { Folder, Video, Image, FileText, FileAudio } from "lucide-react";
 import { JSX } from "react";
 
@@ -9,32 +8,57 @@ type FolderBoxProps = {
   resourceType: string;
 };
 
-const iconMap: Record<string, JSX.Element> = {
-  image: <Image size={56} className="text-neutral-50" />,
-  document: <FileText size={56} className="text-neutral-50" />,
-  audio: <FileAudio size={56} className="text-neutral-50" />,
-  video: <Video size={56} className="text-neutral-50" />,
+const iconMap: Record<string, { icon: JSX.Element; color: string; bgColor: string }> = {
+  image: { 
+    icon: <Image size={24} />, 
+    color: "text-violet-600 dark:text-violet-400",
+    bgColor: "bg-violet-100 dark:bg-violet-900/30"
+  },
+  document: { 
+    icon: <FileText size={24} />, 
+    color: "text-blue-600 dark:text-blue-400",
+    bgColor: "bg-blue-100 dark:bg-blue-900/30"
+  },
+  audio: { 
+    icon: <FileAudio size={24} />, 
+    color: "text-emerald-600 dark:text-emerald-400",
+    bgColor: "bg-emerald-100 dark:bg-emerald-900/30"
+  },
+  video: { 
+    icon: <Video size={24} />, 
+    color: "text-rose-600 dark:text-rose-400",
+    bgColor: "bg-rose-100 dark:bg-rose-900/30"
+  },
 };
 
 export function FolderBox({ label, resourceCount, resourceType }: FolderBoxProps) {
-  const icon = iconMap[resourceType] || <Folder size={56} className="text-neutral-50" />;
-
+  const iconData = iconMap[resourceType] || { 
+    icon: <Folder size={24} />, 
+    color: "text-slate-600 dark:text-slate-400",
+    bgColor: "bg-slate-100 dark:bg-slate-800"
+  };
+  
   return (
     <div
       className="
-        p-6 bg-neutral-100 dark:bg-neutral-800 rounded-lg shadow-md
-        hover:bg-neutral-200 dark:hover:bg-neutral-700
-        transition-colors cursor-pointer
+        relative p-4 bg-white dark:bg-neutral-800
+        rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700
+        hover:shadow-md hover:scale-105 transform transition-all duration-200
+        cursor-pointer group
       "
     >
-      <div className="flex flex-col items-center gap-2 text-center">
-        {icon}
-        <div>
-          <h3 className="text-lg font-semibold text-neutral-900 dark:text-amber-200">
+      <div className="flex items-center gap-4">
+        <div className={`p-2 ${iconData.bgColor} rounded-lg transition-colors`}>
+          <div className={iconData.color}>
+            {iconData.icon}
+          </div>
+        </div>
+        <div className="flex-1">
+          <h3 className="text-base font-medium text-neutral-900 dark:text-white">
             {label}
           </h3>
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">
-            {resourceCount}
+          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+            {resourceCount} {resourceType}
           </p>
         </div>
       </div>

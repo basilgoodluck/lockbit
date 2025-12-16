@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { Plus } from "lucide-react";
 
 interface FileUploaderProps {
   files: File[];
@@ -132,7 +133,7 @@ export function FileUploader({ files, setFiles, className }: FileUploaderProps) 
             select-none
           "
         >
-          Click to upload files
+          <Plus size={24} />
         </button>
         <p
           className={`

@@ -1,6 +1,8 @@
 import toast from "react-hot-toast";
+import type { ReactNode } from "react";
 
 export interface EncryptionResult {
+  status: ReactNode;
   name: string;
   encrypted: string;
 }
