@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import AuthProvider from "@/components/AuthProvider";
+import AuthProvider from "./providers/auth";
+import ReduxProvider from "./providers/redux";
+// import 
 
 export const metadata: Metadata = {
   title: "Data Encryption App",
@@ -17,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased flex flex-col min-h-screen bg-neutral-50 dark:bg-neutral-900 overflow-x-hidden">
-        <AuthProvider>
-            {children}
-        </AuthProvider>
+        <ReduxProvider>
+          <AuthProvider>
+              {children}
+          </AuthProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

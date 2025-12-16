@@ -1,19 +1,15 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import mammoth from "mammoth";
-
-const PDFViewer = dynamic(
-  () => import("@react-pdf-viewer/core").then((mod) => mod.Viewer),
-  { ssr: false }
-);
-const Worker = dynamic(
-  () => import("@react-pdf-viewer/core").then((mod) => mod.Worker),
-  { ssr: false }
-);
-
 import "@react-pdf-viewer/core/lib/styles/index.css";
+
+// Only Viewer, dynamic import, SSR disabled
+const PDFViewer = dynamic(
+  () => import("@react-pdf-viewer/core").then(mod => mod.Viewer),
+  { ssr: false }
+);
 
 type FilePreviewProps = {
   file: File;
@@ -30,7 +26,8 @@ export function FilePreview({ file }: FilePreviewProps) {
       file.type.startsWith("video/") ||
       file.type.startsWith("audio/") ||
       file.type === "application/pdf" ||
-      file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      file.type ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
@@ -42,7 +39,10 @@ export function FilePreview({ file }: FilePreviewProps) {
         setTextContent(text.slice(0, 200) + (text.length > 200 ? "..." : ""));
       };
       reader.readAsText(file);
-    } else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+    } else if (
+      file.type ===
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
       const reader = new FileReader();
       reader.onload = async (e) => {
         const arrayBuffer = e.target?.result as ArrayBuffer;
@@ -88,13 +88,16 @@ export function FilePreview({ file }: FilePreviewProps) {
     } else if (file.type === "application/pdf" && previewUrl) {
       return (
         <div className="mt-2 max-h-32 overflow-hidden border border-neutral-300 dark:border-neutral-600 rounded-md">
-          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
-            <PDFViewer fileUrl={previewUrl} initialPage={0} defaultScale={0.75} />
-          </Worker>
+          <PDFViewer
+            fileUrl={previewUrl}
+            initialPage={0}
+            defaultScale={0.75}
+          />
         </div>
       );
     } else if (
-      file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
+      file.type ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
       docxHtml
     ) {
       return (

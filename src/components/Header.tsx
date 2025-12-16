@@ -1,10 +1,15 @@
+"use client"
 import { FaGithub, FaXTwitter, FaDiscord } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function Header() {
+  const path = usePathname()
+  console.log(path)
+  const matchAuth = path.startsWith("/auth")
   return (
-    <header className="bg-primary-50 dark:bg-neutral-800 shadow-sm shadow-neutral-700 fixed top-0 w-full z-30">
+    <header className={`${ matchAuth ? 'bg-transparent' : 'bg-primary-50 dark:bg-neutral-800'} fixed top-0 w-full z-30`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         <Image src={'/images/logo.png'} alt="logo" width={100} height={100} />
         <div className="flex items-center space-x-4">

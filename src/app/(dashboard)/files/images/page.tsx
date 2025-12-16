@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { FilePreview } from "@/components/FilePreview";
-import "react-loading-skeleton/dist/skeleton.css";
 import toast, { Toaster } from "react-hot-toast";
-import { FaTimesCircle } from "react-icons/fa";
-import { Image, Download } from "lucide-react";
+import { Trash2, Download, Image as ImageIcon } from "lucide-react";
 
 interface StorageFile {
   id: string;
@@ -42,71 +40,79 @@ export default function ImagesPage() {
     toast.success(`Downloading ${file.name}`);
   };
 
-  // Custom skeleton component for better dark mode support
-  const ImageSkeleton = () => (
-    <div className="flex flex-col rounded-lg overflow-hidden">
-      <div className="bg-neutral-200 dark:bg-neutral-700 h-40 w-full animate-pulse"></div>
-      <div className="p-3 space-y-2 bg-neutral-100 dark:bg-neutral-800">
-        <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-3/4 animate-pulse"></div>
-      </div>
-    </div>
-  );
+  if (isLoading) {
+    return null;
+  }
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 py-6 px-6">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold text-neutral-900 dark:text-amber-200 mb-6 flex items-center gap-2">
-          <Image className="w-6 h-6" />
-          Images
-        </h1>
-        {isLoading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {[...Array(8)].map((_, i) => (
-              <ImageSkeleton key={i} />
-            ))}
-          </div>
-        ) : files.length === 0 ? (
-          <p className="text-neutral-600 dark:text-neutral-400 text-center py-12">
-            No images found in your storage.
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-neutral-900 dark:text-white flex items-center gap-3">
+            <div className="p-2 bg-violet-100 dark:bg-violet-900/30 rounded-lg">
+              <ImageIcon size={24} className="text-violet-600 dark:text-violet-400" />
+            </div>
+            Images
+          </h1>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+            {files.length} {files.length === 1 ? 'image' : 'images'} in your library
           </p>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {files.map((file) => (
-              <div
-                key={file.id}
-                className="relative group bg-neutral-100 dark:bg-neutral-800 rounded-lg shadow-md overflow-hidden hover:scale-105 transition-transform duration-200"
-              >
-                <button
-                  onClick={() => handleDelete(file.id)}
-                  className="absolute top-2 right-2 text-accent-500 hover:text-accent-700 dark:text-accent-400 dark:hover:text-accent-600 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-                >
-                  <FaTimesCircle size={18} />
-                </button>
-                <button
-                  onClick={() => handleDownload(file)}
-                  className="absolute top-10 right-2 text-accent-500 hover:text-accent-700 dark:text-accent-400 dark:hover:text-accent-600 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-                >
-                  <Download size={18} />
-                </button>
-                <div className="w-full">
-                  <FilePreview file={new File([file.name], file.name, { type: file.type })} />
+        </div>
+      </div>
+
+      {files.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 text-center">
+          <div className="p-4 bg-violet-100 dark:bg-violet-900/30 rounded-full mb-4">
+            <ImageIcon size={32} className="text-violet-600 dark:text-violet-400" />
+          </div>
+          <p className="text-neutral-600 dark:text-neutral-400 text-lg font-medium">
+            No images found
+          </p>
+          <p className="text-neutral-500 dark:text-neutral-500 text-sm mt-1">
+            Upload your first image to get started
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          {files.map((file) => (
+            <div
+              key={file.id}
+              className="group bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden hover:shadow-lg hover:border-neutral-300 dark:hover:border-neutral-600 transition-all"
+            >
+              <div className="relative aspect-square bg-neutral-100 dark:bg-neutral-900 overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="p-4 bg-violet-100 dark:bg-violet-900/30 rounded-full opacity-80 group-hover:opacity-100 transition-opacity">
+                    <ImageIcon size={32} className="text-violet-600 dark:text-violet-400" />
+                  </div>
                 </div>
-                <div className="p-3 space-y-1">
-                  <p className="text-sm text-neutral-900 dark:text-neutral-200 truncate">
-                    {file.name}
-                  </p>
-                  {/* <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                    {(file.size / 1000).toFixed(2)} KB
-                  </p>
-                  <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                    {file.uploaded}
-                  </p> */}
+                <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button
+                    onClick={() => handleDownload(file)}
+                    className="p-2 bg-white dark:bg-neutral-800 rounded-lg shadow-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+                  >
+                    <Download size={16} className="text-neutral-700 dark:text-neutral-300" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(file.id)}
+                    className="p-2 bg-white dark:bg-neutral-800 rounded-lg shadow-lg hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-colors"
+                  >
+                    <Trash2 size={16} className="text-rose-600 dark:text-rose-400" />
+                  </button>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+              <div className="p-4">
+                <p className="text-sm font-medium text-neutral-900 dark:text-white truncate mb-2">
+                  {file.name}
+                </p>
+                <div className="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+                  <span>{(file.size / 1000).toFixed(2)} KB</span>
+                  <span>{file.uploaded}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       <Toaster position="top-right" />
     </div>
   );

@@ -1,9 +1,9 @@
 "use client";
 
-import { User, LogOut, Plus, Lock, MessageSquare, Menu, X } from "lucide-react";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Menu, X, Lock, MessageSquare } from "lucide-react";
 import { ChatModal } from "@/components/dashboard/ChatModal";
 
 export function Header() {
@@ -12,24 +12,23 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const handleQuery = (query: ChangeEvent<HTMLInputElement>) => {
-    setQuery(query.target.value);
+  const handleQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
   };
 
   return (
     <>
-      <header className="flex items-center justify-between p-4 bg-neutral-50 dark:bg-amber-200 h-16">
-        {/* Logo */}
-        <h1 className="text-2xl font-semibold text-black flex items-center gap-2">
-          <Lock className="w-6 h-6" />
+      <header className="flex items-center justify-between p-4 bg-white dark:bg-neutral-800 h-16 border-b border-neutral-200 dark:border-neutral-700">
+        <h1 className="text-xl font-medium text-neutral-900 dark:text-white flex items-center gap-2">
+          <Lock size={20} className="text-blue-600 dark:text-blue-400" />
           LockBit
         </h1>
 
         <button
-          className="md:hidden text-black"
+          className="md:hidden text-neutral-700 dark:text-white"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
         <div className="hidden md:flex flex-1 justify-center">
@@ -40,16 +39,17 @@ export function Header() {
               onChange={handleQuery}
               placeholder="Search files..."
               className="
-                w-full py-2 pl-10 pr-4 rounded-full bg-neutral-200 dark:bg-neutral-800
-                text-neutral-50 placeholder-neutral-50
-                focus:outline-none 
+                w-full py-2 pl-10 pr-4 rounded-full bg-neutral-100 dark:bg-neutral-700
+                text-neutral-700 dark:text-white placeholder-neutral-500 dark:placeholder-neutral-400
+                border border-neutral-300 dark:border-neutral-600
+                focus:outline-none focus:ring-2 focus:ring-blue-500
                 transition-all
               "
             />
             <svg
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-50"
-              width="20"
-              height="20"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500"
+              width="16"
+              height="16"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
@@ -61,17 +61,14 @@ export function Header() {
           </form>
         </div>
 
-        <nav className="hidden md:flex items-center gap-4">
+        <nav className="hidden md:flex items-center gap-3">
           <Link
             href="/analytics"
             className={`
-              px-3 py-2 rounded-full text-sm font-semibold text-black
-              transition-colors
-              ${
-                pathname === "/analytics"
-                  ? "bg-accent-600"
-                  : "bg-accent-500 hover:bg-accent-600"
-              }
+              px-3 py-1.5 rounded-full text-xs font-medium text-neutral-700 dark:text-white
+              bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600
+              transition-all
+              ${pathname === "/analytics" ? "bg-neutral-200 dark:bg-neutral-600" : ""}
             `}
           >
             Analytics
@@ -79,18 +76,19 @@ export function Header() {
           <button
             onClick={() => setIsChatOpen(true)}
             className="
-              flex items-center gap-2 px-3 py-2 rounded-full text-sm font-semibold text-black
-              bg-accent-500 hover:bg-accent-600 transition-colors
+              flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium text-neutral-700 dark:text-white
+              bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600
+              transition-all
             "
           >
-            <MessageSquare className="w-4 h-4" />
+            <MessageSquare size={14} className="text-blue-600 dark:text-blue-400" />
             Chat with LockBot
           </button>
         </nav>
       </header>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-neutral-50 dark:bg-amber-200 p-4">
+        <div className="md:hidden bg-white dark:bg-neutral-800 p-4 border-b border-neutral-200 dark:border-neutral-700">
           <form className="relative w-full mb-4">
             <input
               type="text"
@@ -98,16 +96,17 @@ export function Header() {
               onChange={handleQuery}
               placeholder="Search files..."
               className="
-                w-full py-2 pl-10 pr-4 rounded-full bg-neutral-200 dark:bg-neutral-800
-                text-neutral-50 placeholder-neutral-50
-                focus:outline-none 
+                w-full py-2 pl-10 pr-4 rounded-full bg-neutral-100 dark:bg-neutral-700
+                text-neutral-700 dark:text-white placeholder-neutral-500 dark:placeholder-neutral-400
+                border border-neutral-300 dark:border-neutral-600
+                focus:outline-none focus:ring-2 focus:ring-blue-500
                 transition-all
               "
             />
             <svg
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-50"
-              width="20"
-              height="20"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500"
+              width="16"
+              height="16"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
@@ -121,13 +120,10 @@ export function Header() {
             <Link
               href="/analytics"
               className={`
-                px-3 py-2 rounded-full text-sm font-semibold text-black
-                transition-colors
-                ${
-                  pathname === "/analytics"
-                    ? "bg-accent-600"
-                    : "bg-accent-500 hover:bg-accent-600"
-                }
+                px-3 py-1.5 rounded-full text-xs font-medium text-neutral-700 dark:text-white
+                bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600
+                transition-all
+                ${pathname === "/analytics" ? "bg-neutral-200 dark:bg-neutral-600" : ""}
               `}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -139,18 +135,18 @@ export function Header() {
                 setIsMobileMenuOpen(false);
               }}
               className="
-                flex items-center gap-2 px-3 py-2 rounded-full text-sm font-semibold text-black
-                bg-accent-500 hover:bg-accent-600 transition-colors
+                flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium text-neutral-700 dark:text-white
+                bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600
+                transition-all
               "
             >
-              <MessageSquare className="w-4 h-4" />
+              <MessageSquare size={14} className="text-blue-600 dark:text-blue-400" />
               Chat with LockBot
             </button>
           </nav>
         </div>
       )}
 
-      {/* Chat Modal */}
       <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </>
   );

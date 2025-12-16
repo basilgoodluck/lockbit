@@ -7,7 +7,8 @@ const mockResources: Record<string, { password: string; expires: Date }> = {
   },
 };
 
-export async function GET(req: NextRequest, { params }: { params: { resourceId: string } }) {
+export async function GET(req: NextRequest, context: { params: Promise<{ resourceId: string }> }) {
+  const params = await context.params;
   const { resourceId } = params;
 
   const resource = mockResources[resourceId];
@@ -18,7 +19,8 @@ export async function GET(req: NextRequest, { params }: { params: { resourceId: 
   return NextResponse.json({ message: "Link is valid" }, { status: 200 });
 }
 
-export async function POST(req: NextRequest, { params }: { params: { resourceId: string } }) {
+export async function POST(req: NextRequest, context: { params: Promise<{ resourceId: string }> }) {
+  const params = await context.params;
   const { resourceId } = params;
   const { password } = await req.json();
 
