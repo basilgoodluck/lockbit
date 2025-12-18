@@ -44,8 +44,6 @@ const topFiles = [
   { name: "project_backup.zip", type: "Others", size: 100, uploaded: "4 May", icon: FileArchive, color: "text-amber-600 dark:text-amber-400" },
 ];
 
-const CHART_COLORS = ["#ef4444", "#8b5cf6", "#10b981", "#3b82f6", "#f59e0b"];
-
 export default function AnalyticsPage() {
   const [chartType, setChartType] = useState<"files" | "size">("files");
   const [selectedYear, setSelectedYear] = useState("2025");
@@ -55,143 +53,121 @@ export default function AnalyticsPage() {
   const totalSize = fileTypes.reduce((acc, curr) => acc + curr.value, 0);
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      {/* Header */}
+    <div className="space-y-6">
       <div className="flex items-start justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">
-            Storage Analytics
-          </h1>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            Track your storage usage and file activity
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <select
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-            className="px-4 py-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-          </select>
-        </div>
+        <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+          className="px-3 py-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 cursor-pointer"
+        >
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+        </select>
       </div>
 
-      {/* Stats Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Storage Card */}
-        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-5">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-blue-50 dark:bg-blue-950/30 rounded-xl flex items-center justify-center">
-              <HardDrive size={24} className="text-blue-600 dark:text-blue-400" />
+            <div className="w-10 h-10 bg-blue-50 dark:bg-blue-950/20 rounded-lg flex items-center justify-center">
+              <HardDrive size={20} className="text-blue-600 dark:text-blue-400" />
             </div>
             <div>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">Storage Used</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">Storage Used</p>
+              <p className="text-xl font-semibold text-neutral-900 dark:text-white">
                 {storageUsage.used} GB
               </p>
             </div>
           </div>
-          <div className="relative">
-            <div className="w-full h-3 bg-neutral-100 dark:bg-neutral-700 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-500"
-                style={{ width: `${Math.min(storagePercentage, 100)}%` }}
-              />
-            </div>
-            <div className="flex justify-between mt-2">
-              <span className="text-xs text-neutral-600 dark:text-neutral-400">
-                {storagePercentage.toFixed(1)}% used
-              </span>
-              <span className="text-xs text-neutral-600 dark:text-neutral-400">
-                {storageUsage.total} GB total
-              </span>
-            </div>
+          <div className="w-full h-2 bg-neutral-100 dark:bg-neutral-700 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-blue-600 dark:bg-blue-500 rounded-full transition-all duration-500"
+              style={{ width: `${Math.min(storagePercentage, 100)}%` }}
+            />
+          </div>
+          <div className="flex justify-between mt-2">
+            <span className="text-xs text-neutral-500 dark:text-neutral-400">
+              {storagePercentage.toFixed(1)}%
+            </span>
+            <span className="text-xs text-neutral-500 dark:text-neutral-400">
+              of {storageUsage.total} GB
+            </span>
           </div>
         </div>
 
-        {/* Total Files Card */}
-        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
+        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-5">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl flex items-center justify-center">
-              <FileText size={24} className="text-emerald-600 dark:text-emerald-400" />
+            <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-950/20 rounded-lg flex items-center justify-center">
+              <FileText size={20} className="text-emerald-600 dark:text-emerald-400" />
             </div>
             <div>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">Total Files</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">Total Files</p>
+              <p className="text-xl font-semibold text-neutral-900 dark:text-white">
                 {totalFiles}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
-            <TrendingUp size={16} />
-            <span className="text-sm font-medium">+12% from last month</span>
+          <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+            <TrendingUp size={14} />
+            <span className="text-xs font-medium">+12% this month</span>
           </div>
         </div>
 
-        {/* Total Size Card */}
-        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
+        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-5">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-purple-50 dark:bg-purple-950/30 rounded-xl flex items-center justify-center">
-              <Calendar size={24} className="text-purple-600 dark:text-purple-400" />
+            <div className="w-10 h-10 bg-purple-50 dark:bg-purple-950/20 rounded-lg flex items-center justify-center">
+              <Calendar size={20} className="text-purple-600 dark:text-purple-400" />
             </div>
             <div>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">This Month</p>
-              <p className="text-2xl font-bold text-neutral-900 dark:text-white">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">This Month</p>
+              <p className="text-xl font-semibold text-neutral-900 dark:text-white">
                 {(totalSize / 1000).toFixed(1)} GB
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400">
-            <TrendingUp size={16} />
-            <span className="text-sm font-medium">+8% from last month</span>
+          <div className="flex items-center gap-1.5 text-purple-600 dark:text-purple-400">
+            <TrendingUp size={14} />
+            <span className="text-xs font-medium">+8% from last month</span>
           </div>
         </div>
       </div>
 
-      {/* File Type Breakdown Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {fileTypes.map((item) => (
           <div
             key={item.type}
-            className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-4 hover:shadow-md transition-all"
+            className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-4"
           >
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${item.color}15` }}>
-                {item.type === "Videos" && <Video size={20} style={{ color: item.color }} />}
-                {item.type === "Audio" && <Music size={20} style={{ color: item.color }} />}
-                {item.type === "Images" && <Image size={20} style={{ color: item.color }} />}
-                {item.type === "Documents" && <FileText size={20} style={{ color: item.color }} />}
-                {item.type === "Others" && <FileArchive size={20} style={{ color: item.color }} />}
-              </div>
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: `${item.color}15` }}>
+              {item.type === "Videos" && <Video size={18} style={{ color: item.color }} />}
+              {item.type === "Audio" && <Music size={18} style={{ color: item.color }} />}
+              {item.type === "Images" && <Image size={18} style={{ color: item.color }} />}
+              {item.type === "Documents" && <FileText size={18} style={{ color: item.color }} />}
+              {item.type === "Others" && <FileArchive size={18} style={{ color: item.color }} />}
             </div>
-            <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+            <p className="text-xs font-medium text-neutral-600 dark:text-neutral-400 mb-1">
               {item.type}
             </p>
-            <div className="flex items-baseline gap-2">
-              <p className="text-xl font-bold text-neutral-900 dark:text-white">
+            <div className="flex items-baseline gap-1.5 mb-0.5">
+              <p className="text-lg font-semibold text-neutral-900 dark:text-white">
                 {item.count}
               </p>
               <p className="text-xs text-neutral-500 dark:text-neutral-400">
                 files
               </p>
             </div>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
               {(item.value / 1000).toFixed(1)} GB
             </p>
           </div>
         ))}
       </div>
 
-      {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Pie Chart */}
-        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
-          <h2 className="text-lg font-semibold text-neutral-900 dark:text-white mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-5">
+          <h2 className="text-base font-medium text-neutral-900 dark:text-white mb-4">
             Storage Distribution
           </h2>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={280}>
             <PieChart>
               <Pie
                 data={fileTypes}
@@ -199,7 +175,7 @@ export default function AnalyticsPage() {
                 nameKey="type"
                 cx="50%"
                 cy="50%"
-                outerRadius={100}
+                outerRadius={90}
                 label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                 labelLine={false}
               >
@@ -210,9 +186,11 @@ export default function AnalyticsPage() {
               <Tooltip
                 contentStyle={{
                   backgroundColor: "rgb(38, 38, 38)",
-                  color: "rgb(212, 212, 212)",
+                  color: "rgb(255, 255, 255)",
                   borderRadius: "8px",
                   border: "none",
+                  fontSize: "12px",
+                  padding: "8px 12px",
                 }}
                 formatter={(value: number) => `${(value / 1000).toFixed(2)} GB`}
               />
@@ -220,15 +198,14 @@ export default function AnalyticsPage() {
           </ResponsiveContainer>
         </div>
 
-        {/* Upload Activity Line Chart */}
-        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">
+        <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-base font-medium text-neutral-900 dark:text-white">
               Upload Activity
             </h2>
             <div className="flex gap-2">
               <button
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   chartType === "files"
                     ? "bg-blue-600 text-white"
                     : "bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-600"
@@ -238,7 +215,7 @@ export default function AnalyticsPage() {
                 Files
               </button>
               <button
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   chartType === "size"
                     ? "bg-blue-600 text-white"
                     : "bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-600"
@@ -249,57 +226,59 @@ export default function AnalyticsPage() {
               </button>
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={280}>
             <LineChart data={uploadActivity}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgb(64, 64, 64)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgb(64, 64, 64)" opacity={0.2} />
               <XAxis 
                 dataKey="date" 
-                stroke="rgb(163, 163, 163)"
-                style={{ fontSize: '12px' }}
+                stroke="rgb(115, 115, 115)"
+                style={{ fontSize: '11px' }}
               />
               <YAxis 
-                stroke="rgb(163, 163, 163)"
-                style={{ fontSize: '12px' }}
+                stroke="rgb(115, 115, 115)"
+                style={{ fontSize: '11px' }}
               />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "rgb(38, 38, 38)",
-                  color: "rgb(212, 212, 212)",
+                  color: "rgb(255, 255, 255)",
                   borderRadius: "8px",
                   border: "none",
+                  fontSize: "12px",
+                  padding: "8px 12px",
                 }}
+                cursor={false}
               />
               <Line
                 type="monotone"
                 dataKey={chartType}
                 stroke={chartType === "files" ? "#3b82f6" : "#10b981"}
-                strokeWidth={3}
-                dot={{ fill: chartType === "files" ? "#3b82f6" : "#10b981", r: 4 }}
-                activeDot={{ r: 6 }}
+                strokeWidth={2}
+                dot={{ fill: chartType === "files" ? "#3b82f6" : "#10b981", r: 3 }}
+                activeDot={{ r: 5, strokeWidth: 0 }}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      {/* Top Files Table */}
       <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
-        <div className="p-6 border-b border-neutral-200 dark:border-neutral-700">
-          <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">
+        <div className="p-5 border-b border-neutral-200 dark:border-neutral-700">
+          <h2 className="text-base font-medium text-neutral-900 dark:text-white">
             Largest Files
           </h2>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
             Top 5 files by size
           </p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
+            <thead className="bg-neutral-50 dark:bg-neutral-900">
               <tr>
-                <th className="text-left p-4 text-xs font-semibold text-neutral-600 dark:text-neutral-400 uppercase">File</th>
-                <th className="text-left p-4 text-xs font-semibold text-neutral-600 dark:text-neutral-400 uppercase">Type</th>
-                <th className="text-left p-4 text-xs font-semibold text-neutral-600 dark:text-neutral-400 uppercase">Size</th>
-                <th className="text-left p-4 text-xs font-semibold text-neutral-600 dark:text-neutral-400 uppercase">Uploaded</th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide">File</th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide">Type</th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide">Size</th>
+                <th className="text-left px-5 py-3 text-xs font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-wide">Uploaded</th>
               </tr>
             </thead>
             <tbody>
@@ -308,27 +287,27 @@ export default function AnalyticsPage() {
                 return (
                   <tr
                     key={index}
-                    className="border-b border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-all"
+                    className="border-t border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700/30 transition-colors"
                   >
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <Icon size={18} className={file.color} />
+                    <td className="px-5 py-3">
+                      <div className="flex items-center gap-2.5">
+                        <Icon size={16} className={file.color} />
                         <span className="text-sm font-medium text-neutral-900 dark:text-white">
                           {file.name}
                         </span>
                       </div>
                     </td>
-                    <td className="p-4">
+                    <td className="px-5 py-3">
                       <span className="text-sm text-neutral-600 dark:text-neutral-400">
                         {file.type}
                       </span>
                     </td>
-                    <td className="p-4">
+                    <td className="px-5 py-3">
                       <span className="text-sm font-medium text-neutral-900 dark:text-white">
                         {file.size} MB
                       </span>
                     </td>
-                    <td className="p-4">
+                    <td className="px-5 py-3">
                       <span className="text-sm text-neutral-600 dark:text-neutral-400">
                         {file.uploaded}
                       </span>
