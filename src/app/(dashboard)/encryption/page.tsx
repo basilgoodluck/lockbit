@@ -145,28 +145,6 @@ export default function EncryptionPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
-      <div className="mb-8">
-        <div className="flex items-start justify-between mb-4">
-          <div>
-            <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">
-              Encrypt Files
-            </h1>
-            <p className="text-neutral-600 dark:text-neutral-400">
-              Secure encryption with shareable links
-            </p>
-          </div>
-          
-          {getTotalFileCount() > 0 && (
-            <div className="flex items-center gap-4 px-4 py-2 bg-neutral-50 dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-700">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-neutral-900 dark:text-white">{getTotalFileCount()}</div>
-                <div className="text-xs text-neutral-500 dark:text-neutral-400">Files Selected</div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <div className="lg:col-span-2 space-y-6">

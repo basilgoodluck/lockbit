@@ -1,80 +1,73 @@
+// 2FA.tsx
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Shield, Check } from "lucide-react";
+import { Shield } from "lucide-react";
 import { SettingsCard } from "./SettingsCard";
-
 export function TwoFactorSettings() {
   const [is2FAEnabled, setIs2FAEnabled] = useState(false);
-
   const handleToggle2FA = () => {
     console.log("Toggling 2FA:", !is2FAEnabled);
     setIs2FAEnabled(!is2FAEnabled);
     toast.success(`2FA ${is2FAEnabled ? "disabled" : "enabled"}!`);
   };
-
   return (
-    <SettingsCard
-      title="Two-Factor Authentication"
-      description="Enhance your account security with 2FA"
-    >
-      <div className="space-y-4">
-        <div className="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-900/50 rounded-lg border border-neutral-200 dark:border-neutral-700">
-          <div className="flex-1">
-            <p className="text-sm font-medium text-neutral-900 dark:text-white">
+    <SettingsCard title="Two-Factor Authentication">
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-xs font-medium text-neutral-900 dark:text-white">
               Enable 2FA
             </p>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
-              Add extra security layer
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              Extra security
             </p>
           </div>
-
           <button
             onClick={handleToggle2FA}
-            className={`w-11 h-6 rounded-full transition-all flex-shrink-0 ${
-              is2FAEnabled ? "bg-blue-600 dark:bg-blue-500" : "bg-neutral-200 dark:bg-neutral-700"
+            className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+              is2FAEnabled ? "bg-neutral-700 dark:bg-neutral-400" : "bg-neutral-300 dark:bg-neutral-700"
             }`}
           >
-            <div className={`w-4 h-4 bg-white rounded-full transition-all ${
-              is2FAEnabled ? "ml-6" : "ml-1"
-            }`} />
+            <span
+              className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${
+                is2FAEnabled ? "translate-x-5" : "translate-x-0.5"
+              }`}
+            />
           </button>
         </div>
-
+       
         {is2FAEnabled && (
-          <div className="pt-4 border-t border-neutral-200 dark:border-neutral-700 space-y-4">
-            <div className="text-center">
-              <p className="text-sm font-medium text-neutral-900 dark:text-white mb-2">
-                Scan QR Code
+          <div className="pt-3 border-t border-neutral-200 dark:border-neutral-800 space-y-3">
+            <div>
+              <p className="text-xs font-medium text-neutral-900 dark:text-white mb-1">
+                Scan QR
               </p>
-              <p className="text-xs text-neutral-600 dark:text-neutral-400 mb-4">
-                Use your authenticator app
+              <p className="text-xs text-neutral-600 dark:text-neutral-400 mb-2">
+                With authenticator app
               </p>
-              
-              <div className="inline-block p-4 bg-white dark:bg-neutral-900 border-2 border-neutral-200 dark:border-neutral-700 rounded-xl">
-                <div className="w-40 h-40 bg-neutral-100 dark:bg-neutral-800 rounded-lg flex items-center justify-center">
+             
+              <div className="inline-block p-3 border border-neutral-300 dark:border-neutral-700 rounded-md">
+                <div className="w-32 h-32 border border-neutral-200 dark:border-neutral-800 rounded flex items-center justify-center">
                   <div className="text-center">
-                    <Shield size={32} className="mx-auto mb-2 text-neutral-400" />
-                    <span className="text-xs text-neutral-500 dark:text-neutral-400">QR Code</span>
+                    <Shield size={24} className="mx-auto mb-1 text-neutral-400" />
+                    <span className="text-xs text-neutral-500 dark:text-neutral-400">QR</span>
                   </div>
                 </div>
               </div>
-
-              <div className="mt-4 p-3 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg">
-                <p className="text-xs text-neutral-600 dark:text-neutral-400 mb-1">
-                  Or enter manually:
+             
+              <div className="mt-2 p-2 border border-neutral-200 dark:border-neutral-800 rounded-md">
+                <p className="text-xs text-neutral-600 dark:text-neutral-400 mb-0.5">
+                  Or manual:
                 </p>
-                <p className="text-sm font-mono font-medium text-neutral-900 dark:text-white">
+                <p className="text-xs font-mono font-medium text-neutral-900 dark:text-white">
                   ABCD EFGH IJKL MNOP
                 </p>
               </div>
             </div>
-
-            <div className="flex items-center gap-2 p-3 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900 rounded-lg">
-              <Check size={16} className="text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-              <p className="text-xs text-emerald-700 dark:text-emerald-400">
-                2FA is now active on your account
-              </p>
-            </div>
+           
+            <p className="text-xs text-neutral-600 dark:text-neutral-400">
+              2FA active
+            </p>
           </div>
         )}
       </div>
