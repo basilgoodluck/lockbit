@@ -26,7 +26,7 @@ export function StorageSettings() {
           </div>
           <div className="w-full h-1.5 bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden">
             <div
-              className="h-full bg-neutral-600 dark:bg-neutral-400 rounded-full transition-all duration-500"
+              className="h-full bg-neutral-600 dark:bg-neutral-400 rounded-full transition-all duration-50
               style={{ width: `${percentage}%` }}
             />
           </div>
