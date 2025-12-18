@@ -23,7 +23,7 @@ html, body {
 }
 
 @keyframes crazy-wobble {
-  0%   { transform: perspective(400px) rotateX(8deg) rotateY(-12deg) scale(1);}
+  0%   { transform: perspective(400px) rotateX(8deg) rotateY(-12deg) scale(1);} 
   50%  { transform: perspective(400px) rotateX(-6deg) rotateY(10deg) scale(1.07);}
   100% { transform: perspective(400px) rotateX(8deg) rotateY(-12deg) scale(1);}
 }
