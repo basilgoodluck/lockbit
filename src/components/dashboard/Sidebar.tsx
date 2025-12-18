@@ -3,14 +3,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Home, Settings, Lock, User, Folder, ChevronDown, X } from "lucide-react";
+import { Menu, Home, Settings, Lock, User, Folder, ChevronDown, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isFilesOpen, setIsFilesOpen] = useState(false);
   const pathname = usePathname();
 
-  // Auto-open Files dropdown if we're on a files route
   useEffect(() => {
     if (pathname?.startsWith("/files")) {
       setIsFilesOpen(true);
@@ -19,6 +19,10 @@ export function Sidebar() {
 
   const toggleSidebar = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const toggleCollapse = () => {
+    setIsCollapsed((prev) => !prev);
   };
   
   const toggleFilesDropdown = () => setIsFilesOpen((prev) => !prev);
@@ -40,13 +44,11 @@ export function Sidebar() {
     { name: "Others", href: "/files/others" },
   ];
 
-  // Check if current route matches the nav item
   const isActiveRoute = (href?: string) => {
     if (!href) return false;
     return pathname === href;
   };
 
-  // Check if any files route is active
   const isFilesRouteActive = () => {
     return pathname?.startsWith("/files");
   };
@@ -69,18 +71,29 @@ export function Sidebar() {
 
       <aside
         className={`
-          fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-neutral-800
-          transform transition-transform duration-300 ease-in-out
+          fixed inset-y-0 left-0 z-50 bg-white dark:bg-neutral-800
+          transform transition-all duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:relative md:translate-x-0
           flex flex-col border-r border-neutral-200 dark:border-neutral-700
           h-full
+          ${isCollapsed ? "md:w-20" : "w-64"}
         `}
       >
-        <div className="flex justify-between items-center p-4 border-b border-neutral-200 dark:border-neutral-700">
-          <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">Menu</h2>
+        <button
+          className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 p-1.5 bg-white dark:bg-neutral-800 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700 transition-colors shadow-md z-10"
+          onClick={toggleCollapse}
+        >
+          {isCollapsed ? (
+            <ChevronRight size={16} className="text-blue-600 dark:text-blue-400" />
+          ) : (
+            <ChevronLeft size={16} className="text-blue-600 dark:text-blue-400" />
+          )}
+        </button>
+
+        <div className="flex justify-end items-center p-4 border-b border-neutral-200 dark:border-neutral-700 md:hidden">
           <button
-            className="md:hidden p-1.5 bg-neutral-100 dark:bg-neutral-700 rounded-md hover:bg-neutral-200 dark:hover:bg-neutral-600 transition-colors"
+            className="p-1.5 bg-neutral-100 dark:bg-neutral-700 rounded-md hover:bg-neutral-200 dark:hover:bg-neutral-600 transition-colors"
             onClick={closeSidebar}
           >
             <X size={16} className="text-blue-600 dark:text-blue-400" />
@@ -114,18 +127,20 @@ export function Sidebar() {
                           : "text-neutral-600 dark:text-neutral-400"
                       } />
                     </div>
-                    <span className="flex-1 text-left">{item.name}</span>
-                    <ChevronDown
-                      size={16}
-                      className={`transition-transform ${isFilesOpen ? "rotate-180" : ""} ${
-                        isFilesRouteActive() || isFilesOpen
-                          ? "text-blue-600 dark:text-blue-400"
-                          : "text-neutral-400"
-                      }`}
-                    />
+                    {!isCollapsed && <span className="flex-1 text-left">{item.name}</span>}
+                    {!isCollapsed && (
+                      <ChevronDown
+                        size={16}
+                        className={`transition-transform ${isFilesOpen ? "rotate-180" : ""} ${
+                          isFilesRouteActive() || isFilesOpen
+                            ? "text-blue-600 dark:text-blue-400"
+                            : "text-neutral-400"
+                        }`}
+                      />
+                    )}
                   </button>
                   
-                  {isFilesOpen && (
+                  {isFilesOpen && !isCollapsed && (
                     <div className="pl-10 mt-1 space-y-1">
                       {resourceTypes.map((resource) => (
                         <Link
@@ -169,7 +184,7 @@ export function Sidebar() {
                         : "text-neutral-600 dark:text-neutral-400"
                     } />
                   </div>
-                  <span>{item.name}</span>
+                  {!isCollapsed && <span>{item.name}</span>}
                 </Link>
               )}
             </div>
@@ -181,17 +196,19 @@ export function Sidebar() {
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/20 flex items-center justify-center flex-shrink-0 border border-neutral-200 dark:border-neutral-700">
               <User size={20} className="text-blue-600 dark:text-blue-400" />
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-neutral-900 dark:text-white font-medium text-sm truncate">User Name</p>
-              <Link
-                href="/settings"
-                className="flex items-center gap-1 text-xs text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                onClick={closeSidebar}
-              >
-                <Settings size={12} />
-                Settings
-              </Link>
-            </div>
+            {!isCollapsed && (
+              <div className="flex-1 min-w-0">
+                <p className="text-neutral-900 dark:text-white font-medium text-sm truncate">User Name</p>
+                <Link
+                  href="/settings"
+                  className="flex items-center gap-1 text-xs text-neutral-600 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  onClick={closeSidebar}
+                >
+                  <Settings size={12} />
+                  Settings
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </aside>

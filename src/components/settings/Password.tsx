@@ -30,7 +30,6 @@ export function PasswordSettings() {
     console.log("Updating password:", { currentPassword, newPassword });
     toast.success("Password updated successfully!");
     
-    // Reset form
     setCurrentPassword("");
     setNewPassword("");
     setConfirmPassword("");
@@ -39,7 +38,7 @@ export function PasswordSettings() {
   const getPasswordStrength = (password: string) => {
     if (password.length === 0) return { label: "", color: "", width: "0%" };
     if (password.length < 6) return { label: "Weak", color: "bg-rose-500", width: "33%" };
-    if (password.length < 10) return { label: "Medium", color: "bg-amber-500", width: "66%" };
+    if (password.length < 10) return { label: "Medium", color: "bg-yellow-500", width: "66%" };
     return { label: "Strong", color: "bg-emerald-500", width: "100%" };
   };
 
@@ -50,11 +49,9 @@ export function PasswordSettings() {
       title="Change Password"
       description="Update your account password"
     >
-      <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Current Password */}
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="text-sm font-semibold text-neutral-900 dark:text-white flex items-center gap-2 mb-2">
-            <Lock size={14} className="text-blue-600 dark:text-blue-400" />
+          <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2 block">
             Current Password
           </label>
           <div className="relative">
@@ -63,7 +60,7 @@ export function PasswordSettings() {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="Enter current password"
-              className="w-full px-4 py-2.5 pr-10 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-3 py-2.5 pr-10 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
             />
             <button
               type="button"
@@ -75,10 +72,8 @@ export function PasswordSettings() {
           </div>
         </div>
 
-        {/* New Password */}
         <div>
-          <label className="text-sm font-semibold text-neutral-900 dark:text-white flex items-center gap-2 mb-2">
-            <Lock size={14} className="text-blue-600 dark:text-blue-400" />
+          <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2 block">
             New Password
           </label>
           <div className="relative">
@@ -87,7 +82,7 @@ export function PasswordSettings() {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter new password"
-              className="w-full px-4 py-2.5 pr-10 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-3 py-2.5 pr-10 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
             />
             <button
               type="button"
@@ -98,14 +93,13 @@ export function PasswordSettings() {
             </button>
           </div>
           
-          {/* Password Strength Indicator */}
           {newPassword && (
             <div className="mt-2">
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs text-neutral-600 dark:text-neutral-400">Password strength</span>
                 <span className={`text-xs font-medium ${
                   strength.label === "Strong" ? "text-emerald-600 dark:text-emerald-400" :
-                  strength.label === "Medium" ? "text-amber-600 dark:text-amber-400" :
+                  strength.label === "Medium" ? "text-yellow-600 dark:text-yellow-400" :
                   "text-rose-600 dark:text-rose-400"
                 }`}>
                   {strength.label}
@@ -121,10 +115,8 @@ export function PasswordSettings() {
           )}
         </div>
 
-        {/* Confirm Password */}
         <div>
-          <label className="text-sm font-semibold text-neutral-900 dark:text-white flex items-center gap-2 mb-2">
-            <Lock size={14} className="text-blue-600 dark:text-blue-400" />
+          <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2 block">
             Confirm New Password
           </label>
           <div className="relative">
@@ -133,7 +125,7 @@ export function PasswordSettings() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm new password"
-              className="w-full px-4 py-2.5 pr-10 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-3 py-2.5 pr-10 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
             />
             <button
               type="button"
@@ -144,9 +136,8 @@ export function PasswordSettings() {
             </button>
           </div>
           
-          {/* Match Indicator */}
           {confirmPassword && (
-            <div className="mt-2 flex items-center gap-2">
+            <div className="mt-2">
               {newPassword === confirmPassword ? (
                 <p className="text-xs text-emerald-600 dark:text-emerald-400">✓ Passwords match</p>
               ) : (
@@ -156,15 +147,12 @@ export function PasswordSettings() {
           )}
         </div>
 
-        {/* Submit Button */}
-        <div className="pt-2">
-          <button
-            type="submit"
-            className="w-full py-2.5 px-4 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-all hover:scale-[1.02] active:scale-[0.98]"
-          >
-            Update Password
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="w-full py-2.5 px-4 rounded-lg text-sm font-medium text-white bg-neutral-700 hover:bg-neutral-800 dark:bg-neutral-600 dark:hover:bg-neutral-700 transition-colors"
+        >
+          Update Password
+        </button>
       </form>
     </SettingsCard>
   );

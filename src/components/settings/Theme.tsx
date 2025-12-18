@@ -16,7 +16,6 @@ export function ThemeSettings() {
     } else if (newTheme === "light") {
       document.documentElement.classList.remove("dark");
     } else {
-      // System theme
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       document.documentElement.classList.toggle("dark", prefersDark);
     }
@@ -38,36 +37,32 @@ export function ThemeSettings() {
           <button
             key={value}
             onClick={() => handleChange(value)}
-            className={`w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all ${
+            className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-all ${
               theme === value
-                ? "border-blue-600 bg-blue-50 dark:bg-blue-950/30"
-                : "border-neutral-200 dark:border-neutral-700 hover:border-neutral-300 dark:hover:border-neutral-600 hover:bg-neutral-50 dark:hover:bg-neutral-800/30"
+                ? "border-blue-500 dark:border-blue-600 bg-blue-50 dark:bg-blue-950/20"
+                : "border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
             }`}
           >
-            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              theme === value ? "border-blue-600 bg-blue-600" : "border-neutral-300 dark:border-neutral-600"
-            }`}>
-              {theme === value && (
-                <div className="w-2 h-2 bg-white rounded-full" />
-              )}
-            </div>
-            
             <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
               theme === value ? "bg-blue-100 dark:bg-blue-900/30" : "bg-neutral-100 dark:bg-neutral-800"
             }`}>
               <Icon size={20} className={theme === value ? "text-blue-600 dark:text-blue-400" : "text-neutral-600 dark:text-neutral-400"} />
             </div>
-
+            
             <div className="flex-1 text-left">
-              <p className={`text-sm font-semibold ${
-                theme === value ? "text-neutral-900 dark:text-white" : "text-neutral-700 dark:text-neutral-300"
-              }`}>
+              <p className="text-sm font-medium text-neutral-900 dark:text-white">
                 {label}
               </p>
               <p className="text-xs text-neutral-500 dark:text-neutral-400">
                 {description}
               </p>
             </div>
+
+            {theme === value && (
+              <div className="w-5 h-5 rounded-full bg-blue-600 dark:bg-blue-500 flex items-center justify-center flex-shrink-0">
+                <div className="w-2 h-2 bg-white rounded-full" />
+              </div>
+            )}
           </button>
         ))}
       </div>

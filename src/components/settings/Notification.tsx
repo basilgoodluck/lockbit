@@ -46,26 +46,26 @@ export function NotificationSettings() {
         {notificationTypes.map(({ key, label, icon: Icon, description }) => (
           <div 
             key={key} 
-            className="flex items-center gap-3 p-3 bg-neutral-50 dark:bg-neutral-900/50 rounded-lg border border-neutral-200 dark:border-neutral-700 hover:border-neutral-300 dark:hover:border-neutral-600 transition-all"
+            className="flex items-center gap-4 p-3 bg-neutral-50 dark:bg-neutral-900/50 rounded-lg border border-neutral-200 dark:border-neutral-700"
           >
-            <div className="w-10 h-10 bg-blue-50 dark:bg-blue-950/30 rounded-lg flex items-center justify-center flex-shrink-0">
-              <Icon size={20} className="text-blue-600 dark:text-blue-400" />
+            <div className="w-10 h-10 bg-neutral-100 dark:bg-neutral-800 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Icon size={18} className="text-neutral-600 dark:text-neutral-400" />
             </div>
-
+            
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-neutral-900 dark:text-white">
+              <p className="text-sm font-medium text-neutral-900 dark:text-white">
                 {label}
               </p>
               <p className="text-xs text-neutral-500 dark:text-neutral-400">
                 {description}
               </p>
             </div>
-
+            
             <button
               onClick={() => handleToggle(key as keyof typeof notifications)}
               className={`w-11 h-6 rounded-full transition-all flex-shrink-0 ${
                 notifications[key as keyof typeof notifications] 
-                  ? "bg-blue-600" 
+                  ? "bg-blue-600 dark:bg-blue-500" 
                   : "bg-neutral-200 dark:bg-neutral-700"
               }`}
             >
