@@ -7,6 +7,11 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+
 .crazy-3d-title {
   text-shadow:
     2px 2px 0 #787476, 

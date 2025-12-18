@@ -53,8 +53,8 @@ export default function DashboardLayout({
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <main className="flex-1">
-          <div className="p-6 min-h-full overflow-y-auto scrollbar-hide">
+        <main className="flex-1 overflow-hidden">
+          <div className="h-full p-6 overflow-y-auto scrollbar-hide">
             {isLoading ? <LoadingSkeleton /> : children}
           </div>
           <style jsx global>{`
