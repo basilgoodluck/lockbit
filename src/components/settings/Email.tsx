@@ -31,26 +31,22 @@ export function EmailSettings() {
       title="Change Email"
       description="Update your account email address"
     >
-      <form onSubmit={handleSubmit} className="space-y-5">
-        {/* New Email */}
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="text-sm font-semibold text-neutral-900 dark:text-white flex items-center gap-2 mb-2">
-            <Mail size={14} className="text-blue-600 dark:text-blue-400" />
-            New Email
+          <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2 block">
+            New Email Address
           </label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter new email address"
-            className="w-full px-4 py-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            placeholder="your.email@example.com"
+            className="w-full px-3 py-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
           />
         </div>
-
-        {/* Current Password */}
+        
         <div>
-          <label className="text-sm font-semibold text-neutral-900 dark:text-white flex items-center gap-2 mb-2">
-            <Lock size={14} className="text-blue-600 dark:text-blue-400" />
+          <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2 block">
             Current Password
           </label>
           <div className="relative">
@@ -58,8 +54,8 @@ export function EmailSettings() {
               type={showPassword ? "text" : "password"}
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Enter current password"
-              className="w-full px-4 py-2.5 pr-10 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              placeholder="Enter your password"
+              className="w-full px-3 py-2.5 pr-10 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
             />
             <button
               type="button"
@@ -73,16 +69,13 @@ export function EmailSettings() {
             Required to verify this change
           </p>
         </div>
-
-        {/* Submit Button */}
-        <div className="pt-2">
-          <button
-            type="submit"
-            className="w-full py-2.5 px-4 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-all hover:scale-[1.02] active:scale-[0.98]"
-          >
-            Update Email
-          </button>
-        </div>
+        
+        <button
+          type="submit"
+          className="w-full py-2.5 px-4 rounded-lg text-sm font-medium text-white bg-neutral-700 hover:bg-neutral-800 dark:bg-neutral-600 dark:hover:bg-neutral-700 transition-colors"
+        >
+          Update Email
+        </button>
       </form>
     </SettingsCard>
   );

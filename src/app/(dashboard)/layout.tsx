@@ -1,5 +1,4 @@
 "use client";
-
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
 import { usePathname } from "next/navigation";
@@ -54,8 +53,19 @@ export default function DashboardLayout({
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <main className="flex-1 overflow-y-auto p-6">
-          {isLoading ? <LoadingSkeleton /> : children}
+        <main className="flex-1 overflow-hidden">
+          <div className="h-full p-6 overflow-y-auto scrollbar-hide">
+            {isLoading ? <LoadingSkeleton /> : children}
+          </div>
+          <style jsx global>{`
+            .scrollbar-hide::-webkit-scrollbar {
+              display: none;
+            }
+            .scrollbar-hide {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `}</style>
         </main>
       </div>
     </div>

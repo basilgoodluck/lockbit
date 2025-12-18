@@ -34,7 +34,6 @@ export default function EncryptionPage() {
   const [showModal, setShowModal] = useState(false);
   const [hasViewedLink, setHasViewedLink] = useState(false);
   
-  // Configuration options
   const [expiryTime, setExpiryTime] = useState("1h");
   const [maxDownloads, setMaxDownloads] = useState("unlimited");
   const [requirePassword, setRequirePassword] = useState(true);
@@ -146,7 +145,6 @@ export default function EncryptionPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
-      {/* Header with Stats */}
       <div className="mb-8">
         <div className="flex items-start justify-between mb-4">
           <div>
@@ -158,7 +156,6 @@ export default function EncryptionPage() {
             </p>
           </div>
           
-          {/* Quick Stats */}
           {getTotalFileCount() > 0 && (
             <div className="flex items-center gap-4 px-4 py-2 bg-neutral-50 dark:bg-neutral-800/50 rounded-lg border border-neutral-200 dark:border-neutral-700">
               <div className="text-center">
@@ -170,28 +167,24 @@ export default function EncryptionPage() {
         </div>
       </div>
 
-      {/* Two Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        {/* Left Column - File Selection (2/3 width) */}
         <div className="lg:col-span-2 space-y-6">
           
-          {/* Source Selection Card */}
           <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
-            {/* Source Tabs - Flush with card edges */}
             <div className="flex border-b border-neutral-200 dark:border-neutral-700">
               <button
                 onClick={() => setSource("computer")}
                 className={`
                   flex-1 py-4 px-6 text-sm font-semibold transition-all relative
                   ${source === "computer"
-                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30"
-                    : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-700/50"
+                    ? "text-blue-700 dark:text-blue-300 bg-blue-50/50 dark:bg-blue-950/20"
+                    : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-700/30"
                   }
                 `}
               >
                 {source === "computer" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-700 dark:bg-blue-300" />
                 )}
                 <div className="flex items-center justify-center gap-2">
                   <Upload size={16} />
@@ -203,13 +196,13 @@ export default function EncryptionPage() {
                 className={`
                   flex-1 py-4 px-6 text-sm font-semibold transition-all relative
                   ${source === "storage"
-                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30"
-                    : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-700/50"
+                    ? "text-blue-700 dark:text-blue-300 bg-blue-50/50 dark:bg-blue-950/20"
+                    : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-700/30"
                   }
                 `}
               >
                 {source === "storage" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-700 dark:bg-blue-300" />
                 )}
                 <div className="flex items-center justify-center gap-2">
                   <HardDrive size={16} />
@@ -218,7 +211,6 @@ export default function EncryptionPage() {
               </button>
             </div>
 
-            {/* Content Area */}
             <div className="p-6">
               {source === "computer" ? (
                 <div className="space-y-4">
@@ -226,19 +218,14 @@ export default function EncryptionPage() {
                   
                   {files.length > 0 && (
                     <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">
-                          Selected Files ({files.length})
-                        </h3>
-                      </div>
                       <div className="space-y-2 max-h-80 overflow-y-auto pr-2 scrollbar-thin">
                         {files.map((file, index) => (
                           <div
                             key={index}
                             className="group flex items-center gap-3 p-3 bg-white dark:bg-neutral-900/50 rounded-lg border border-neutral-200 dark:border-neutral-700 hover:border-neutral-300 dark:hover:border-neutral-600 hover:shadow-sm transition-all"
                           >
-                            <div className="w-10 h-10 bg-blue-50 dark:bg-blue-950/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <FileText size={20} className="text-blue-600 dark:text-blue-400" />
+                            <div className="w-10 h-10 bg-blue-50 dark:bg-blue-950/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                              <FileText size={20} className="text-blue-700 dark:text-blue-300" />
                             </div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-neutral-900 dark:text-white truncate">{file.name}</p>
@@ -246,7 +233,7 @@ export default function EncryptionPage() {
                             </div>
                             <button
                               onClick={() => removeFile(index)}
-                              className="opacity-0 group-hover:opacity-100 p-2 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-lg transition-all"
+                              className="opacity-0 group-hover:opacity-100 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-all"
                             >
                               <FaTimesCircle size={16} className="text-rose-500" />
                             </button>
@@ -258,7 +245,6 @@ export default function EncryptionPage() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {/* Search and Filter Bar */}
                   <div className="flex gap-3">
                     <div className="flex-1 relative">
                       <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
@@ -267,13 +253,13 @@ export default function EncryptionPage() {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search files..."
-                        className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                       />
                     </div>
                     <select
                       value={filterType}
                       onChange={(e) => setFilterType(e.target.value)}
-                      className="px-4 py-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="px-4 py-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all cursor-pointer"
                     >
                       <option value="all">All Types</option>
                       <option value="pdf">PDF</option>
@@ -283,19 +269,7 @@ export default function EncryptionPage() {
                     </select>
                   </div>
 
-                  {/* File List with Selection */}
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">
-                        Available Files
-                      </h3>
-                      {selectedStorageFiles.length > 0 && (
-                        <span className="text-xs text-blue-600 dark:text-blue-400 font-medium">
-                          {selectedStorageFiles.length} selected
-                        </span>
-                      )}
-                    </div>
-                    
+                  <div>                    
                     <div className="space-y-2 max-h-80 overflow-y-auto pr-2 scrollbar-thin">
                       {filteredStorageFiles.length === 0 ? (
                         <div className="text-center py-12 text-neutral-500 dark:text-neutral-400 text-sm">
@@ -310,12 +284,12 @@ export default function EncryptionPage() {
                             className={`
                               w-full flex items-center gap-3 p-3 rounded-lg border-2 text-left transition-all
                               ${selectedStorageFiles.includes(file.id)
-                                ? "border-blue-600 bg-blue-50 dark:bg-blue-950/30"
+                                ? "border-blue-600 bg-blue-50/50 dark:bg-blue-950/20"
                                 : "border-neutral-200 dark:border-neutral-700 hover:border-neutral-300 dark:hover:border-neutral-600 hover:bg-neutral-50 dark:hover:bg-neutral-800/30 hover:shadow-sm"
                               }
                             `}
                           >
-                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0
+                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all
                               ${selectedStorageFiles.includes(file.id) ? "border-blue-600 bg-blue-600" : "border-neutral-300 dark:border-neutral-600"}
                             `}>
                               {selectedStorageFiles.includes(file.id) && <Check size={12} className="text-white" strokeWidth={3} />}
@@ -337,12 +311,11 @@ export default function EncryptionPage() {
             </div>
           </div>
 
-          {/* Optional Message - Collapsible */}
           {source === "computer" && (
             <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
               <button
                 onClick={() => setShowMessageInput(!showMessageInput)}
-                className="w-full flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-all"
+                className="w-full flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-neutral-700/30 transition-all"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-neutral-50 dark:bg-neutral-700/50 rounded-lg flex items-center justify-center border border-neutral-200 dark:border-neutral-700">
@@ -352,25 +325,23 @@ export default function EncryptionPage() {
                     Add message (optional)
                   </span>
                 </div>
-                {showMessageInput ? <ChevronUp size={16} className="text-neutral-400" /> : <ChevronDown size={16} className="text-neutral-400" />}
+                <ChevronDown size={16} className={`text-neutral-400 transition-transform duration-200 ${showMessageInput ? "rotate-180" : ""}`} />
               </button>
-              {showMessageInput && (
+              <div className={`overflow-hidden transition-all duration-300 ${showMessageInput ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
                 <div className="px-4 pb-4 border-t border-neutral-200 dark:border-neutral-700 pt-4">
                   <TextInput text={text} setText={setText} />
                 </div>
-              )}
+              </div>
             </div>
           )}
         </div>
 
-        {/* Right Column - Encryption Settings (1/3 width) */}
         <div className="lg:col-span-1 space-y-6">
           
-          {/* Password Input - Prominent Position */}
           <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 bg-blue-50 dark:bg-blue-950/30 rounded-lg flex items-center justify-center border border-blue-100 dark:border-blue-900/50">
-                <Lock size={16} className="text-blue-600 dark:text-blue-400" />
+              <div className="w-8 h-8 bg-blue-50 dark:bg-blue-950/20 rounded-lg flex items-center justify-center border border-blue-100 dark:border-blue-900/30">
+                <Lock size={16} className="text-blue-700 dark:text-blue-300" />
               </div>
               <h3 className="text-sm font-semibold text-neutral-900 dark:text-white">
                 Encryption Password
@@ -381,18 +352,17 @@ export default function EncryptionPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter strong password"
-              className="w-full px-4 py-3 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
             />
             <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-2">
               Required to encrypt and decrypt files
             </p>
           </div>
 
-          {/* Configuration - Collapsible */}
           <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
             <button
               onClick={() => setShowConfig(!showConfig)}
-              className="w-full flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-all"
+              className="w-full flex items-center justify-between p-4 hover:bg-neutral-50 dark:hover:bg-neutral-700/30 transition-all"
             >
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-neutral-50 dark:bg-neutral-700/50 rounded-lg flex items-center justify-center border border-neutral-200 dark:border-neutral-700">
@@ -402,12 +372,11 @@ export default function EncryptionPage() {
                   Advanced Settings
                 </span>
               </div>
-              {showConfig ? <ChevronUp size={16} className="text-neutral-400" /> : <ChevronDown size={16} className="text-neutral-400" />}
+              <ChevronDown size={16} className={`text-neutral-400 transition-transform duration-200 ${showConfig ? "rotate-180" : ""}`} />
             </button>
             
-            {showConfig && (
+            <div className={`overflow-hidden transition-all duration-300 ${showConfig ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}`}>
               <div className="px-4 pb-4 space-y-4 border-t border-neutral-200 dark:border-neutral-700 pt-4">
-                {/* Expiry Time */}
                 <div>
                   <label className="text-xs font-semibold text-neutral-700 dark:text-neutral-300 mb-2 flex items-center gap-2">
                     <Clock size={14} />
@@ -416,7 +385,7 @@ export default function EncryptionPage() {
                   <select
                     value={expiryTime}
                     onChange={(e) => setExpiryTime(e.target.value)}
-                    className="w-full px-3 py-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all cursor-pointer"
                   >
                     <option value="1h">1 hour</option>
                     <option value="6h">6 hours</option>
@@ -427,7 +396,6 @@ export default function EncryptionPage() {
                   </select>
                 </div>
 
-                {/* Max Downloads */}
                 <div>
                   <label className="text-xs font-semibold text-neutral-700 dark:text-neutral-300 mb-2 flex items-center gap-2">
                     <Download size={14} />
@@ -436,7 +404,7 @@ export default function EncryptionPage() {
                   <select
                     value={maxDownloads}
                     onChange={(e) => setMaxDownloads(e.target.value)}
-                    className="w-full px-3 py-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all cursor-pointer"
                   >
                     <option value="1">1 download</option>
                     <option value="5">5 downloads</option>
@@ -446,7 +414,6 @@ export default function EncryptionPage() {
                 </div>
 
                 <div className="pt-2 border-t border-neutral-200 dark:border-neutral-700 space-y-3">
-                  {/* Require Password Toggle */}
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300 flex items-center gap-2">
                       <Lock size={14} />
@@ -454,13 +421,12 @@ export default function EncryptionPage() {
                     </label>
                     <button
                       onClick={() => setRequirePassword(!requirePassword)}
-                      className={`w-11 h-6 rounded-full transition-all ${requirePassword ? "bg-blue-600" : "bg-neutral-200 dark:bg-neutral-700"}`}
+                      className={`w-11 h-6 rounded-full transition-all ${requirePassword ? "bg-blue-600" : "bg-neutral-300 dark:bg-neutral-600"}`}
                     >
-                      <div className={`w-4 h-4 bg-white rounded-full transition-all ${requirePassword ? "ml-6" : "ml-1"}`} />
+                      <div className={`w-4 h-4 bg-white rounded-full shadow-sm transition-all duration-200 ${requirePassword ? "ml-6" : "ml-1"}`} />
                     </button>
                   </div>
 
-                  {/* Allow Preview Toggle */}
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300 flex items-center gap-2">
                       <Eye size={14} />
@@ -468,17 +434,16 @@ export default function EncryptionPage() {
                     </label>
                     <button
                       onClick={() => setAllowPreview(!allowPreview)}
-                      className={`w-11 h-6 rounded-full transition-all ${allowPreview ? "bg-blue-600" : "bg-neutral-200 dark:bg-neutral-700"}`}
+                      className={`w-11 h-6 rounded-full transition-all ${allowPreview ? "bg-blue-600" : "bg-neutral-300 dark:bg-neutral-600"}`}
                     >
-                      <div className={`w-4 h-4 bg-white rounded-full transition-all ${allowPreview ? "ml-6" : "ml-1"}`} />
+                      <div className={`w-4 h-4 bg-white rounded-full shadow-sm transition-all duration-200 ${allowPreview ? "ml-6" : "ml-1"}`} />
                     </button>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
 
-          {/* Encrypt Button - Sticky */}
           <div className="lg:sticky lg:top-6">
             <button
               onClick={handleEncryptClick}
@@ -486,7 +451,7 @@ export default function EncryptionPage() {
               className={`
                 w-full py-4 rounded-xl font-semibold text-base text-white transition-all flex items-center justify-center gap-3 shadow-lg
                 ${isProcessing || getTotalFileCount() === 0 || !password
-                  ? "bg-neutral-200 dark:bg-neutral-800 cursor-not-allowed shadow-none opacity-60"
+                  ? "bg-neutral-300 dark:bg-neutral-700 cursor-not-allowed shadow-none opacity-60"
                   : "bg-blue-600 hover:bg-blue-700 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
                 }
               `}
@@ -510,7 +475,6 @@ export default function EncryptionPage() {
         </div>
       </div>
 
-      {/* Success Modal */}
       {showModal && (
         <div 
           className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200"
@@ -520,8 +484,7 @@ export default function EncryptionPage() {
             className="bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
-            <div className="bg-gradient-to-br from-blue-50 to-emerald-50/30 dark:from-blue-950/30 dark:to-emerald-950/20 p-6 border-b border-neutral-200 dark:border-neutral-700">
+            <div className="bg-gradient-to-br from-blue-50 to-emerald-50/30 dark:from-blue-950/20 dark:to-emerald-950/10 p-6 border-b border-neutral-200 dark:border-neutral-700">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -545,9 +508,7 @@ export default function EncryptionPage() {
               </div>
             </div>
 
-            {/* Content */}
             <div className="p-6 space-y-4">
-              {/* Warning Banner */}
               {!hasViewedLink && (
                 <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg p-3 flex items-start gap-3">
                   <div className="w-5 h-5 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -564,7 +525,6 @@ export default function EncryptionPage() {
                 </div>
               )}
 
-              {/* Secure Link */}
               <div>
                 <label className="text-xs font-semibold text-neutral-700 dark:text-neutral-300 mb-2 block">
                   Secure Share Link
@@ -576,7 +536,6 @@ export default function EncryptionPage() {
                 </div>
               </div>
 
-              {/* Actions */}
               <div className="flex gap-3">
                 <button
                   onClick={handleCopyAndMarkViewed}
@@ -605,7 +564,6 @@ export default function EncryptionPage() {
                 </a>
               </div>
 
-              {/* Link Details */}
               <div className="pt-4 border-t border-neutral-200 dark:border-neutral-700">
                 <h4 className="text-xs font-semibold text-neutral-700 dark:text-neutral-300 mb-3">
                   Link Settings
@@ -651,7 +609,6 @@ export default function EncryptionPage() {
               </div>
             </div>
 
-            {/* Footer */}
             <div className="bg-neutral-50 dark:bg-neutral-900 px-6 py-4 border-t border-neutral-200 dark:border-neutral-700">
               <button
                 onClick={handleCloseModal}

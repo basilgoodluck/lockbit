@@ -1,0 +1,22 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, dev]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create_and_merge:
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          gh pr create --base main --head dev --title "Auto PR from dev to main" --body "Automated merge from dev branch" || true
+          PR=$(gh pr list --base main --head dev --json number -q '.[0].number')
+          gh pr merge $PR --squash --delete-branch=false || true
+        env:
+          GH_TOKEN: ${{ github.token }}
