@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Trash2, Download, FileQuestion } from "lucide-react";
 import { FilesList } from "@/components/FilesList";
@@ -13,28 +12,21 @@ interface StorageFile {
   type: string;
 }
 
-export default function OthersPage() {
-  const [files, setFiles] = useState<StorageFile[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+const mockFiles: StorageFile[] = [
+  { id: "o1", name: "sales_report.xlsx", size: 24000, uploaded: "2025-05-01", type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+  { id: "o2", name: "employee_data.csv", size: 18000, uploaded: "2025-05-03", type: "text/csv" },
+  { id: "o3", name: "meeting_notes.txt", size: 2000, uploaded: "2025-05-05", type: "text/plain" },
+  { id: "o4", name: "customer_list.csv", size: 30000, uploaded: "2025-05-07", type: "text/csv" },
+  { id: "o5", name: "budget_2025.xlsx", size: 22000, uploaded: "2025-05-09", type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
+  { id: "o6", name: "inventory.csv", size: 15000, uploaded: "2025-05-11", type: "text/csv" },
+  { id: "o7", name: "archive.zip", size: 128000, uploaded: "2025-05-13", type: "application/zip" },
+  { id: "o8", name: "analytics_data.csv", size: 35000, uploaded: "2025-05-15", type: "text/csv" },
+  { id: "o9", name: "backup.sql", size: 45000, uploaded: "2025-05-17", type: "application/sql" },
+  { id: "o10", name: "config.json", size: 3000, uploaded: "2025-05-19", type: "application/json" },
+];
 
-  useEffect(() => {
-    setTimeout(() => {
-      const mockFiles: StorageFile[] = [
-        { id: "o1", name: "sales_report.xlsx", size: 24000, uploaded: "2025-05-01", type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
-        { id: "o2", name: "employee_data.csv", size: 18000, uploaded: "2025-05-03", type: "text/csv" },
-        { id: "o3", name: "meeting_notes.txt", size: 2000, uploaded: "2025-05-05", type: "text/plain" },
-        { id: "o4", name: "customer_list.csv", size: 30000, uploaded: "2025-05-07", type: "text/csv" },
-        { id: "o5", name: "budget_2025.xlsx", size: 22000, uploaded: "2025-05-09", type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
-        { id: "o6", name: "inventory.csv", size: 15000, uploaded: "2025-05-11", type: "text/csv" },
-        { id: "o7", name: "archive.zip", size: 128000, uploaded: "2025-05-13", type: "application/zip" },
-        { id: "o8", name: "analytics_data.csv", size: 35000, uploaded: "2025-05-15", type: "text/csv" },
-        { id: "o9", name: "backup.sql", size: 45000, uploaded: "2025-05-17", type: "application/sql" },
-        { id: "o10", name: "config.json", size: 3000, uploaded: "2025-05-19", type: "application/json" },
-      ];
-      setFiles(mockFiles);
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+export default function OthersPage() {
+  const [files, setFiles] = useState<StorageFile[]>(mockFiles);
 
   const handleDelete = (id: string) => {
     setFiles(files.filter((file) => file.id !== id));
@@ -70,18 +62,9 @@ export default function OthersPage() {
     </div>
   );
 
-  if (isLoading) {
-    return null;
-  }
-
   return (
     <>
-      <FilesList
-        files={files}
-        onDelete={handleDelete}
-        onDownload={handleDownload}
-        renderPreview={renderOtherPreview}
-      />
+      <FilesList files={files} onDelete={handleDelete} onDownload={handleDownload} renderPreview={renderOtherPreview} />
       <Toaster position="top-right" />
     </>
   );

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Trash2, Download, Image as ImageIcon } from "lucide-react";
 import { FilesList } from "@/components/FilesList";
@@ -13,22 +12,15 @@ interface StorageFile {
   type: string;
 }
 
-export default function ImagesPage() {
-  const [files, setFiles] = useState<StorageFile[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+const mockFiles: StorageFile[] = [
+  { id: "i1", name: "photo.jpg", size: 12000, uploaded: "2025-05-01", type: "image/jpeg" },
+  { id: "i2", name: "artwork.png", size: 8000, uploaded: "2025-05-02", type: "image/png" },
+  { id: "i3", name: "screenshot.jpeg", size: 15000, uploaded: "2025-05-04", type: "image/jpeg" },
+  { id: "i4", name: "logo.gif", size: 5000, uploaded: "2025-05-06", type: "image/gif" },
+];
 
-  useEffect(() => {
-    setTimeout(() => {
-      const mockFiles: StorageFile[] = [
-        { id: "i1", name: "photo.jpg", size: 12000, uploaded: "2025-05-01", type: "image/jpeg" },
-        { id: "i2", name: "artwork.png", size: 8000, uploaded: "2025-05-02", type: "image/png" },
-        { id: "i3", name: "screenshot.jpeg", size: 15000, uploaded: "2025-05-04", type: "image/jpeg" },
-        { id: "i4", name: "logo.gif", size: 5000, uploaded: "2025-05-06", type: "image/gif" },
-      ];
-      setFiles(mockFiles);
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+export default function ImagesPage() {
+  const [files, setFiles] = useState<StorageFile[]>(mockFiles);
 
   const handleDelete = (id: string) => {
     setFiles(files.filter((file) => file.id !== id));
@@ -64,18 +56,9 @@ export default function ImagesPage() {
     </div>
   );
 
-  if (isLoading) {
-    return null;
-  }
-
   return (
     <>
-      <FilesList
-        files={files}
-        onDelete={handleDelete}
-        onDownload={handleDownload}
-        renderPreview={renderImagePreview}
-      />
+      <FilesList files={files} onDelete={handleDelete} onDownload={handleDownload} renderPreview={renderImagePreview} />
       <Toaster position="top-right" />
     </>
   );

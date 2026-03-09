@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Trash2, Download, Play } from "lucide-react";
 import { FilesList } from "@/components/FilesList";
@@ -13,31 +12,24 @@ interface StorageFile {
   type: string;
 }
 
-export default function VideosPage() {
-  const [files, setFiles] = useState<StorageFile[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+const mockFiles: StorageFile[] = [
+  { id: "v1", name: "vacation.mp4", size: 150000, uploaded: "2025-05-01", type: "video/mp4" },
+  { id: "v2", name: "tutorial.mov", size: 200000, uploaded: "2025-05-03", type: "video/quicktime" },
+  { id: "v3", name: "demo.mp4", size: 80000, uploaded: "2025-05-05", type: "video/mp4" },
+  { id: "v4", name: "presentation.mp4", size: 120000, uploaded: "2025-05-07", type: "video/mp4" },
+  { id: "v5", name: "webinar.mp4", size: 95000, uploaded: "2025-05-09", type: "video/mp4" },
+  { id: "v6", name: "interview.mov", size: 180000, uploaded: "2025-05-11", type: "video/quicktime" },
+  { id: "v7", name: "conference.mp4", size: 210000, uploaded: "2025-05-13", type: "video/mp4" },
+  { id: "v8", name: "training.mp4", size: 165000, uploaded: "2025-05-15", type: "video/mp4" },
+  { id: "v9", name: "workshop.mp4", size: 140000, uploaded: "2025-05-17", type: "video/mp4" },
+  { id: "v10", name: "lecture.mov", size: 190000, uploaded: "2025-05-19", type: "video/quicktime" },
+  { id: "v11", name: "meeting.mp4", size: 110000, uploaded: "2025-05-21", type: "video/mp4" },
+  { id: "v12", name: "seminar.mp4", size: 175000, uploaded: "2025-05-23", type: "video/mp4" },
+  { id: "v13", name: "review.mp4", size: 85000, uploaded: "2025-05-25", type: "video/mp4" },
+];
 
-  useEffect(() => {
-    setTimeout(() => {
-      const mockFiles: StorageFile[] = [
-        { id: "v1", name: "vacation.mp4", size: 150000, uploaded: "2025-05-01", type: "video/mp4" },
-        { id: "v2", name: "tutorial.mov", size: 200000, uploaded: "2025-05-03", type: "video/quicktime" },
-        { id: "v3", name: "demo.mp4", size: 80000, uploaded: "2025-05-05", type: "video/mp4" },
-        { id: "v4", name: "presentation.mp4", size: 120000, uploaded: "2025-05-07", type: "video/mp4" },
-        { id: "v5", name: "webinar.mp4", size: 95000, uploaded: "2025-05-09", type: "video/mp4" },
-        { id: "v6", name: "interview.mov", size: 180000, uploaded: "2025-05-11", type: "video/quicktime" },
-        { id: "v7", name: "conference.mp4", size: 210000, uploaded: "2025-05-13", type: "video/mp4" },
-        { id: "v8", name: "training.mp4", size: 165000, uploaded: "2025-05-15", type: "video/mp4" },
-        { id: "v9", name: "workshop.mp4", size: 140000, uploaded: "2025-05-17", type: "video/mp4" },
-        { id: "v10", name: "lecture.mov", size: 190000, uploaded: "2025-05-19", type: "video/quicktime" },
-        { id: "v11", name: "meeting.mp4", size: 110000, uploaded: "2025-05-21", type: "video/mp4" },
-        { id: "v12", name: "seminar.mp4", size: 175000, uploaded: "2025-05-23", type: "video/mp4" },
-        { id: "v13", name: "review.mp4", size: 85000, uploaded: "2025-05-25", type: "video/mp4" },
-      ];
-      setFiles(mockFiles);
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+export default function VideosPage() {
+  const [files, setFiles] = useState<StorageFile[]>(mockFiles);
 
   const handleDelete = (id: string) => {
     setFiles(files.filter((file) => file.id !== id));
@@ -73,18 +65,9 @@ export default function VideosPage() {
     </div>
   );
 
-  if (isLoading) {
-    return null;
-  }
-
   return (
     <>
-      <FilesList
-        files={files}
-        onDelete={handleDelete}
-        onDownload={handleDownload}
-        renderPreview={renderVideoPreview}
-      />
+      <FilesList files={files} onDelete={handleDelete} onDownload={handleDownload} renderPreview={renderVideoPreview} />
       <Toaster position="top-right" />
     </>
   );
