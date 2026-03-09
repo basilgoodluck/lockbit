@@ -22,9 +22,9 @@ export default function EncryptionPage() {
     handleEncrypt,
     handleDecrypt,
   } = useEncryption();
+
   const [source, setSource] = useState<"computer" | "storage">("computer");
   const [selectedStorageFiles, setSelectedStorageFiles] = useState<string[]>([]);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [generatedLink, setGeneratedLink] = useState("");
   const [copied, setCopied] = useState(false);
   const [showMessageInput, setShowMessageInput] = useState(false);
@@ -33,7 +33,7 @@ export default function EncryptionPage() {
   const [filterType, setFilterType] = useState("all");
   const [showModal, setShowModal] = useState(false);
   const [hasViewedLink, setHasViewedLink] = useState(false);
-  
+
   const [expiryTime, setExpiryTime] = useState("1h");
   const [maxDownloads, setMaxDownloads] = useState("unlimited");
   const [requirePassword, setRequirePassword] = useState(true);
@@ -101,16 +101,12 @@ export default function EncryptionPage() {
       toast.error("Please enter a password!");
       return;
     }
-    setIsProcessing(true);
-    setTimeout(() => {
-      handleEncrypt();
-      const mockLink = `https://securefiles.app/d/${Math.random().toString(36).substring(2, 10)}`;
-      setGeneratedLink(mockLink);
-      setShowModal(true);
-      setHasViewedLink(false);
-      toast.success("Files encrypted successfully!");
-      setIsProcessing(false);
-    }, 1500);
+    handleEncrypt();
+    const mockLink = `https://securefiles.app/d/${Math.random().toString(36).substring(2, 10)}`;
+    setGeneratedLink(mockLink);
+    setShowModal(true);
+    setHasViewedLink(false);
+    toast.success("Files encrypted successfully!");
   };
 
   const handleCloseModal = () => {
@@ -144,11 +140,12 @@ export default function EncryptionPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <>
+      <div className="max-w-7xl mx-auto px-4 py-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         <div className="lg:col-span-2 space-y-6">
-          
+
           <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden">
             <div className="flex border-b border-neutral-200 dark:border-neutral-700">
               <button
@@ -193,7 +190,7 @@ export default function EncryptionPage() {
               {source === "computer" ? (
                 <div className="space-y-4">
                   <FileUploader files={files} setFiles={handleSetFiles} className="w-full" />
-                  
+
                   {files.length > 0 && (
                     <div>
                       <div className="space-y-2 max-h-80 overflow-y-auto pr-2 scrollbar-thin">
@@ -247,7 +244,7 @@ export default function EncryptionPage() {
                     </select>
                   </div>
 
-                  <div>                    
+                  <div>
                     <div className="space-y-2 max-h-80 overflow-y-auto pr-2 scrollbar-thin">
                       {filteredStorageFiles.length === 0 ? (
                         <div className="text-center py-12 text-neutral-500 dark:text-neutral-400 text-sm">
@@ -315,7 +312,7 @@ export default function EncryptionPage() {
         </div>
 
         <div className="lg:col-span-1 space-y-6">
-          
+
           <div className="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-5">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 h-8 bg-blue-50 dark:bg-blue-950/20 rounded-lg flex items-center justify-center border border-blue-100 dark:border-blue-900/30">
@@ -352,7 +349,7 @@ export default function EncryptionPage() {
               </div>
               <ChevronDown size={16} className={`text-neutral-400 transition-transform duration-200 ${showConfig ? "rotate-180" : ""}`} />
             </button>
-            
+
             <div className={`overflow-hidden transition-all duration-300 ${showConfig ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}`}>
               <div className="px-4 pb-4 space-y-4 border-t border-neutral-200 dark:border-neutral-700 pt-4">
                 <div>
@@ -425,40 +422,28 @@ export default function EncryptionPage() {
           <div className="lg:sticky lg:top-6">
             <button
               onClick={handleEncryptClick}
-              disabled={isProcessing || getTotalFileCount() === 0 || !password}
+              disabled={getTotalFileCount() === 0 || !password}
               className={`
                 w-full py-4 rounded-xl font-semibold text-base text-white transition-all flex items-center justify-center gap-3 shadow-lg
-                ${isProcessing || getTotalFileCount() === 0 || !password
+                ${getTotalFileCount() === 0 || !password
                   ? "bg-neutral-300 dark:bg-neutral-700 cursor-not-allowed shadow-none opacity-60"
                   : "bg-blue-600 hover:bg-blue-700 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
                 }
               `}
             >
-              {isProcessing ? (
-                <>
-                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                  Encrypting Files...
-                </>
-              ) : (
-                <>
-                  <Lock size={20} />
-                  Encrypt {getTotalFileCount() > 0 ? `${getTotalFileCount()} File${getTotalFileCount() > 1 ? 's' : ''}` : 'Files'}
-                </>
-              )}
+              <Lock size={20} />
+              Encrypt {getTotalFileCount() > 0 ? `${getTotalFileCount()} File${getTotalFileCount() > 1 ? 's' : ''}` : 'Files'}
             </button>
           </div>
         </div>
       </div>
 
       {showModal && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200"
           onClick={handleCloseModal}
         >
-          <div 
+          <div
             className="bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
@@ -600,47 +585,20 @@ export default function EncryptionPage() {
       )}
 
       <Toaster position="top-right" />
-      
+
       <style jsx>{`
-        .scrollbar-thin::-webkit-scrollbar {
-          width: 6px;
-        }
-        .scrollbar-thin::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .scrollbar-thin::-webkit-scrollbar-thumb {
-          background: rgb(163 163 163 / 0.3);
-          border-radius: 3px;
-        }
-        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-          background: rgb(163 163 163 / 0.5);
-        }
-        .dark .scrollbar-thin::-webkit-scrollbar-thumb {
-          background: rgb(115 115 115 / 0.3);
-        }
-        .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-          background: rgb(115 115 115 / 0.5);
-        }
-        
-        @keyframes fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes slide-in-from-bottom-4 {
-          from { transform: translateY(1rem); }
-          to { transform: translateY(0); }
-        }
-        @keyframes zoom-in-95 {
-          from { transform: scale(0.95); }
-          to { transform: scale(1); }
-        }
-        .animate-in {
-          animation: fade-in 0.2s ease-out, slide-in-from-bottom-4 0.2s ease-out;
-        }
-        .zoom-in-95 {
-          animation: zoom-in-95 0.2s ease-out;
-        }
+        .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+        .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+        .scrollbar-thin::-webkit-scrollbar-thumb { background: rgb(163 163 163 / 0.3); border-radius: 3px; }
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: rgb(163 163 163 / 0.5); }
+        .dark .scrollbar-thin::-webkit-scrollbar-thumb { background: rgb(115 115 115 / 0.3); }
+        .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: rgb(115 115 115 / 0.5); }
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoom-in-95 { from { transform: scale(0.95); } to { transform: scale(1); } }
+        .animate-in { animation: fade-in 0.2s ease-out; }
+        .zoom-in-95 { animation: zoom-in-95 0.2s ease-out; }
       `}</style>
     </div>
+    </>
   );
 }

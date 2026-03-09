@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Trash2, Download, Eye } from "lucide-react";
 import { FilesList } from "@/components/FilesList";
@@ -13,22 +13,15 @@ interface StorageFile {
   type: string;
 }
 
-export default function DocumentsPage() {
-  const [files, setFiles] = useState<StorageFile[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+const mockFiles: StorageFile[] = [
+  { id: "d1", name: "report.pdf", size: 24000, uploaded: "2025-05-01", type: "application/pdf" },
+  { id: "d2", name: "contract.docx", size: 18000, uploaded: "2025-05-03", type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
+  { id: "d3", name: "notes.txt", size: 2000, uploaded: "2025-05-05", type: "text/plain" },
+  { id: "d4", name: "proposal.pdf", size: 30000, uploaded: "2025-05-07", type: "application/pdf" },
+];
 
-  useEffect(() => {
-    setTimeout(() => {
-      const mockFiles: StorageFile[] = [
-        { id: "d1", name: "report.pdf", size: 24000, uploaded: "2025-05-01", type: "application/pdf" },
-        { id: "d2", name: "contract.docx", size: 18000, uploaded: "2025-05-03", type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
-        { id: "d3", name: "notes.txt", size: 2000, uploaded: "2025-05-05", type: "text/plain" },
-        { id: "d4", name: "proposal.pdf", size: 30000, uploaded: "2025-05-07", type: "application/pdf" },
-      ];
-      setFiles(mockFiles);
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+export default function DocumentsPage() {
+  const [files, setFiles] = useState<StorageFile[]>(mockFiles);
 
   const handleDelete = (id: string) => {
     setFiles(files.filter((file) => file.id !== id));
@@ -63,10 +56,6 @@ export default function DocumentsPage() {
       </div>
     </div>
   );
-
-  if (isLoading) {
-    return null;
-  }
 
   return (
     <>
