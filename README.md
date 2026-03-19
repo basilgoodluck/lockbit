@@ -1,36 +1,201 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TaskFlow
 
-## Getting Started
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.0.0-orange)
 
-First, run the development server:
+TaskFlow is a lightweight project management tool that helps teams track tasks, deadlines, and progress in real time. It eliminates the chaos of scattered to-do lists by bringing everything into one clean, collaborative workspace.
+
+---
+
+## Table of Contents
+
+1. [Features](#features)
+2. [Prerequisites](#prerequisites)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Configuration](#configuration)
+6. [API Reference](#api-reference)
+7. [Contributing](#contributing)
+8. [License](#license)
+9. [Authors & Acknowledgements](#authors--acknowledgements)
+10. [Contact & Support](#contact--support)
+
+---
+
+## Features
+
+* Real-time task tracking across teams
+* Drag-and-drop Kanban board interface
+* Role-based access control (Admin, Member, Viewer)
+* Email and in-app notifications
+* CSV export for reports
+* Dark mode support
+
+---
+
+## Prerequisites
+
+Before getting started, make sure you have the following installed:
+
+* Node.js v18 or higher
+* PostgreSQL 14+
+* npm v9+
+* Git
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/yourname/taskflow.git
+cd taskflow
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Set up the database:
+
+```bash
+npm run db:migrate
+npm run db:seed
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be running at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Usage
 
-## Learn More
+Once the server is running, open your browser and go to `http://localhost:3000`. Create an account, set up your first workspace, and start adding tasks.
 
-To learn more about Next.js, take a look at the following resources:
+To create a task from the CLI:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run task:create -- --title "Fix login bug" --assignee "jane@example.com" --due "2026-04-01"
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To run tests:
 
-## Deploy on Vercel
+```bash
+npm run test
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![TaskFlow Dashboard Screenshot](https://via.placeholder.com/800x400?text=TaskFlow+Dashboard)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Configuration
+
+Create a `.env` file in the root of the project and add the following variables:
+
+```env
+PORT=3000
+DATABASE_URL=postgresql://user:password@localhost:5432/taskflow
+JWT_SECRET=your_jwt_secret_here
+SMTP_HOST=smtp.mailtrap.io
+SMTP_PORT=587
+SMTP_USER=your_smtp_user
+SMTP_PASS=your_smtp_password
+```
+
+---
+
+## API Reference
+
+**Base URL:** `https://api.taskflow.dev/v1`
+
+**Get all tasks**
+
+```
+GET /tasks
+```
+
+| Parameter  | Type   | Description                        |
+|------------|--------|------------------------------------|
+| workspace  | string | The workspace ID (required)        |
+| status     | string | Filter by status: open, closed     |
+| assignee   | string | Filter by assignee email           |
+
+**Response:**
+
+```json
+{
+  "tasks": [
+    {
+      "id": "t_01",
+      "title": "Fix login bug",
+      "status": "open",
+      "assignee": "jane@example.com",
+      "due": "2026-04-01"
+    }
+  ]
+}
+```
+
+**Create a task**
+
+```
+POST /tasks
+```
+
+```json
+{
+  "title": "Design onboarding flow",
+  "assignee": "mark@example.com",
+  "due": "2026-04-15",
+  "workspace": "ws_42"
+}
+```
+
+---
+
+## Contributing
+
+Contributions are welcome! Here is how to get involved:
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature-name`
+3. Make your changes and commit: `git commit -m "Add your feature"`
+4. Push to your branch: `git push origin feature/your-feature-name`
+5. Open a Pull Request against the `main` branch
+
+Please make sure your code passes all tests before submitting a PR.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for full details.
+
+---
+
+## Authors & Acknowledgements
+
+**Author:** John Doe ([@johndoe](https://github.com/johndoe))
+
+Special thanks to:
+
+* The open-source community for inspiration
+* [Tailwind CSS](https://tailwindcss.com) for the UI foundation
+* [Express.js](https://expressjs.com) for the backend framework
+
+---
+
+## Contact & Support
+
+For bug reports and feature requests, please open an issue on [GitHub Issues](https://github.com/yourname/taskflow/issues).
+
+For direct inquiries, reach out at **support@taskflow.dev** or join the community on [Discord](https://discord.gg/taskflow).
